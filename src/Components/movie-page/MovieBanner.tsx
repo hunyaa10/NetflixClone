@@ -129,11 +129,14 @@ const BannerTrailerOverlay = styled.div`
 const BannerTrailer = styled.div`
   width: 50vw;
   height: auto;
-  border-radius: 10px;
   z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #ffffff64;
+  box-shadow: 0 0 50px 0 #ffffff64;
 `;
 const BannerVideoFrame = styled.iframe`
   width: 100%;
