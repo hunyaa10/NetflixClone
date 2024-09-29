@@ -66,7 +66,7 @@ const Header = () => {
             placeholder="검색어를 입력하세요"
             animate={{
               scaleX: searchOpen ? 1 : 0,
-              display: searchOpen ? "block" : "none",
+              // display: searchOpen ? "block" : "none",
             }}
             transition={{ type: "linear" }}
           />
@@ -141,10 +141,10 @@ const SearchInput = styled(motion.input)`
   border-radius: 0.25rem;
   background-color: #222;
   color: #fff;
-  display: none;
+  /* display: none; */
 `;
 const LoginBtn = styled.img`
-  margin-left: 0.5rem;
-  width: 24px;
+  width: 1.5rem;
+  margin-left: 2rem;
   cursor: pointer;
 `;

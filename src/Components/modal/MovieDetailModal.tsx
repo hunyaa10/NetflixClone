@@ -132,7 +132,9 @@ const InfoNav = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const InfoBtns = styled.div``;
+const InfoBtns = styled.div`
+  display: flex;
+`;
 const InfoBtn = styled.img`
   width: 32px;
   margin-right: 1rem;
