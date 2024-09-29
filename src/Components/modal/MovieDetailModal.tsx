@@ -8,6 +8,7 @@ import {
   IMovie,
 } from "../../api";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 // icon
 import PlusIcon from "../../icon/plus-circle.svg";
@@ -20,7 +21,7 @@ const MovieDetailModal = () => {
 
   // 모달창 오버레이
   const onOverlayClick = () => {
-    navigate("/");
+    navigate("/home");
     document.body.style.overflow = "";
   };
 
@@ -61,7 +62,7 @@ const MovieDetailModal = () => {
                 <InfoTitle>{movieDetails.title}</InfoTitle>
               </VideoTrailer>
             )}
-            {console.log(movieDetails.id)}
+            {/* {console.log(movieDetails.id)} */}
             <InfoNav>
               <InfoBtns>
                 <InfoBtn src={PlusIcon} />
@@ -90,6 +91,14 @@ const MovieDetailModal = () => {
 export default MovieDetailModal;
 
 // style
+const Overlay = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+`;
 const InfoBox = styled(motion.div)`
   position: fixed;
   z-index: 999;
@@ -154,12 +163,4 @@ const InfoText = styled.p`
 const InfoTextNone = styled.p`
   padding: 1rem;
   font-size: 14px;
-`;
-const Overlay = styled(motion.div)`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 998;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.7);
 `;

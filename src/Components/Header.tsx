@@ -19,7 +19,7 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { scrollY } = useScroll();
 
-  const homeMatch = useMatch("/");
+  const homeMatch = useMatch("home");
   const tvMatch = useMatch("tv");
   const pickMatch = useMatch("pick");
   const navAnimation = useAnimation();
@@ -46,7 +46,9 @@ const Header = () => {
         <Logo src={LogoIcon} alt="logo" />
         <MenuList>
           <Menu>
-            <Link to="/">영화 {homeMatch && <Circle layoutId="circle" />}</Link>
+            <Link to="home">
+              영화 {homeMatch && <Circle layoutId="circle" />}
+            </Link>
           </Menu>
           <Menu>
             <Link to="tv">
