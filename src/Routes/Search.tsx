@@ -1,4 +1,4 @@
 function Search() {
-  return null;
+  return <p>검색페이지</p>;
 }
 export default Search;
