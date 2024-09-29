@@ -141,7 +141,9 @@ const BannerVideoFrame = styled.iframe`
   aspect-ratio: 16 / 9;
   border: none;
 `;
-const InfoBtns = styled.div``;
+const InfoBtns = styled.div`
+  display: flex;
+`;
 const InfoBtn = styled.img`
   width: 32px;
   margin-right: 1rem;
