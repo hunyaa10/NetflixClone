@@ -5,6 +5,7 @@ import UserIcon from "../icon/user.svg";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
+import UserNav from "./UserNav";
 
 const navVariants = {
   top: {
@@ -17,12 +18,18 @@ const navVariants = {
 
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isNavShow, setIsNavShow] = useState(false);
+
   const { scrollY } = useScroll();
 
   const homeMatch = useMatch("home");
   const tvMatch = useMatch("tv");
   const pickMatch = useMatch("pick");
   const navAnimation = useAnimation();
+
+  const handleShowUserNav = () => {
+    setIsNavShow(true);
+  };
 
   const toggleSearch = () => {
     setSearchOpen((prev) => !prev);
@@ -79,7 +86,8 @@ const Header = () => {
             style={{ width: "24px" }}
           />
         </Search>
-        <LoginBtn src={UserIcon} />
+        <UserBtn src={UserIcon} onClick={handleShowUserNav} />
+        {isNavShow && <UserNav setIsNavShow={setIsNavShow} />}
       </Col>
     </Nav>
   );
@@ -145,7 +153,7 @@ const SearchInput = styled(motion.input)`
   color: #fff;
   /* display: none; */
 `;
-const LoginBtn = styled.img`
+const UserBtn = styled.img`
   width: 1.5rem;
   margin-left: 2rem;
   cursor: pointer;
