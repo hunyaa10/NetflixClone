@@ -4,8 +4,11 @@ import { theme } from "../theme";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+// icon
+import XIcon from "../icon/X-mark.svg";
+
 interface UserNavProps {
-  setIsNavShow: (isVisible: boolean) => void;
+  setIsUserNavShow: (isVisible: boolean) => void;
 }
 
 const navVariants = {
@@ -22,39 +25,54 @@ const navVariants = {
   },
 };
 
-const UserNav: React.FC<UserNavProps> = ({ setIsNavShow }) => {
+const UserNav: React.FC<UserNavProps> = ({ setIsUserNavShow }) => {
   const navigate = useNavigate();
 
   const handleHiddenUserNav = () => {
-    setIsNavShow(false);
+    setIsUserNavShow(false);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("isLogin");
-    setIsNavShow(false);
+    setIsUserNavShow(false);
     navigate("/");
   };
 
   return (
-    <Nav initial="initial" animate="visible" exit="exit" variants={navVariants}>
-      <Btn onClick={handleHiddenUserNav}>닫기</Btn>
-      <Ul>
-        <Li onClick={handleLogout}>로그아웃</Li>
-      </Ul>
-    </Nav>
+    <Wrapper>
+      <Nav
+        initial="initial"
+        animate="visible"
+        exit="exit"
+        variants={navVariants}
+      >
+        <CloseBtn onClick={handleHiddenUserNav}>
+          <Icon src={XIcon} alt="x-icon" />
+        </CloseBtn>
+        <Ul>
+          <Li>프로필관리</Li>
+          <Li>계정</Li>
+          <Li>고객센터</Li>
+        </Ul>
+        <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>
+      </Nav>
+    </Wrapper>
   );
 };
 
 export default UserNav;
 
 // style
+const Wrapper = styled.div`
+  position: relative;
+`;
 const Nav = styled(motion.nav)`
-  width: 20vw;
-  height: 100vh;
-  padding: 2rem 1rem;
-  background-color: #000;
-  position: fixed;
-  top: 0;
+  width: 15vw;
+  padding: 0.7rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  position: absolute;
+  top: 2rem;
   right: 0;
   z-index: 9999;
   display: flex;
@@ -67,23 +85,30 @@ const Ul = styled.ul`
 const Li = styled.li`
   width: 100%;
   padding: 0.5rem;
-  border-bottom: 1px solid #525252;
-  color: ${theme.white.darker};
+  color: #333;
+  font-size: 0.8rem;
+  opacity: 0.7;
   cursor: pointer;
   &:hover {
-    color: ${theme.red};
+    opacity: 1;
   }
 `;
-const Btn = styled.button`
-  margin-bottom: 2rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  background-color: ${theme.red};
-  color: ${theme.white.darker};
-  font-size: 0.8rem;
-  font-weight: 600;
-  opacity: 0.7;
+const CloseBtn = styled.button``;
+const Icon = styled.img`
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.5;
   &:hover {
-    opacity: 0.9;
+    opacity: 0.7;
+  }
+`;
+const LogoutBtn = styled.button`
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  color: #333;
+  border-top: 1px solid ${theme.white.darker};
+  &:hover {
+    color: ${theme.red};
   }
 `;
