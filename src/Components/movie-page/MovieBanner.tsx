@@ -61,7 +61,6 @@ const MovieBanner = () => {
           <Overview>{nowPlayingData?.results[0].overview}</Overview>
           <InfoBtns>
             <InfoBtn src={PlayIcon} onClick={onPlayIconClick} />
-            <InfoBtn src={PlusIcon} />
             <InfoBtn src={ThumbUpIcon} />
             <InfoBtn src={ThumbDownIcon} />
           </InfoBtns>

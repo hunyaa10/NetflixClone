@@ -8,14 +8,14 @@ import LogoImg from "../icon/logo.svg";
 
 // 로고 애니메이션
 const logoVariants = {
-  initial: { scale: 0.1, opacity: 0.5 },
+  initial: { rotateY: 360, opacity: 0 },
   animate: {
-    scale: 10,
+    rotateY: 0,
     opacity: 1,
-    transition: { duration: 4, ease: "easeIn" },
+    transition: { duration: 2, ease: "easeIn" },
   },
   exit: {
-    scale: 10,
+    rotateY: 360,
     opacity: 0,
     transition: { ease: "easeOut" },
   },
@@ -33,7 +33,6 @@ const Login = () => {
     password: "",
   });
 
-  const [isLogin, setIsLogin] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +126,7 @@ const Form = styled.form`
   align-items: center;
 `;
 const LogoTitle = styled.img`
-  width: 8vw;
+  width: 10vw;
   margin-bottom: 2rem;
 `;
 const Input = styled.input`
@@ -158,7 +157,7 @@ const Text = styled.p`
   color: #333;
 `;
 
-/////////////
+// 로고 애니매이션css
 const LogoWrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -170,4 +169,6 @@ const LogoWrapper = styled.div`
   align-items: center;
 `;
 const LogoBox = styled(motion.h1)``;
-const Logo = styled.img``;
+const Logo = styled.img`
+  width: 15vw;
+`;

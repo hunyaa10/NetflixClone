@@ -5,8 +5,10 @@ import UserIcon from "../icon/user.svg";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
+import UserNav from "./UserNav";
 
-const navVariants = {
+// 헤더 애니메이션
+const headerVariants = {
   top: {
     background: "linear-gradient(#000, transparent)",
   },
@@ -15,25 +17,43 @@ const navVariants = {
   },
 };
 
+// 검색창 애니메이션
+const searchInputVariants = {
+  open: {
+    scaleX: 1,
+    transition: { duration: 0.3, type: "linear" },
+  },
+  closed: {
+    scaleX: 0,
+    transition: { duration: 0.3, type: "linear" },
+  },
+};
+
 const Header = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchInputOpen, setSearchInputOpen] = useState(false);
+  const [isUserNavShow, setIsUserNavShow] = useState(false);
+
   const { scrollY } = useScroll();
 
   const homeMatch = useMatch("home");
   const tvMatch = useMatch("tv");
   const pickMatch = useMatch("pick");
-  const navAnimation = useAnimation();
+  const headerAnimation = useAnimation();
+
+  const handleShowUserNav = () => {
+    setIsUserNavShow(true);
+  };
 
   const toggleSearch = () => {
-    setSearchOpen((prev) => !prev);
+    setSearchInputOpen((prev) => !prev);
   };
 
   useEffect(() => {
     const scrollHeader = scrollY.onChange(() => {
       if (scrollY.get() > 0) {
-        navAnimation.start("scroll");
+        headerAnimation.start("scroll");
       } else {
-        navAnimation.start("top");
+        headerAnimation.start("top");
       }
     });
 
@@ -41,7 +61,7 @@ const Header = () => {
   }, [scrollY]);
 
   return (
-    <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
+    <Nav variants={headerVariants} animate={headerAnimation} initial={"top"}>
       <Col>
         <Logo src={LogoIcon} alt="logo" />
         <MenuList>
@@ -66,11 +86,9 @@ const Header = () => {
         <Search>
           <SearchInput
             placeholder="검색어를 입력하세요"
-            animate={{
-              scaleX: searchOpen ? 1 : 0,
-              // display: searchOpen ? "block" : "none",
-            }}
-            transition={{ type: "linear" }}
+            variants={searchInputVariants}
+            initial="closed"
+            animate={searchInputOpen ? "open" : "closed"}
           />
           <motion.img
             onClick={toggleSearch}
@@ -79,7 +97,8 @@ const Header = () => {
             style={{ width: "24px" }}
           />
         </Search>
-        <LoginBtn src={UserIcon} />
+        <UserBtn src={UserIcon} onClick={handleShowUserNav} />
+        {isUserNavShow && <UserNav setIsUserNavShow={setIsUserNavShow} />}
       </Col>
     </Nav>
   );
@@ -145,7 +164,7 @@ const SearchInput = styled(motion.input)`
   color: #fff;
   /* display: none; */
 `;
-const LoginBtn = styled.img`
+const UserBtn = styled.img`
   width: 1.5rem;
   margin-left: 2rem;
   cursor: pointer;

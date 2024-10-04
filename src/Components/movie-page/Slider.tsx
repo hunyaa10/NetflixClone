@@ -70,7 +70,7 @@ const Slider = ({ category }: SliderProps) => {
     setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
   };
 
-  const onMovieClick = (movieId: number) => {
+  const onClickMovie = (movieId: number) => {
     navigate(`/movies/${movieId}`);
     document.body.style.overflow = "hidden";
   };
@@ -100,7 +100,7 @@ const Slider = ({ category }: SliderProps) => {
                   initial="normal"
                   whileHover="hover"
                   transition={{ type: "tween" }}
-                  onClick={() => onMovieClick(movie.id)}
+                  onClick={() => onClickMovie(movie.id)}
                 >
                   <MovieInfo variants={infoVariants}>
                     <p>{movie.title}</p>

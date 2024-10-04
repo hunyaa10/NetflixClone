@@ -7,7 +7,7 @@ import {
   IGetMoviesResult,
 } from "../api";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useMatch } from "react-router-dom";
 import MovieBanner from "../Components/movie-page/MovieBanner";
 import MovieDetailModal from "../Components/modal/MovieDetailModal";
