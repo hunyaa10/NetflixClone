@@ -84,7 +84,7 @@ export function getMoviesUpcoming() {
   ).then((res) => res.json());
 }
 
-///////티비쇼///////////////
+// tvShow Data
 export interface TvSeries {
   id: number;
   backdrop_path: string;
