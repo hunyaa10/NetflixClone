@@ -57,7 +57,12 @@ const MovieBanner = () => {
       >
         <BannerText>
           <Title>{nowPlayingData?.results[0].title}</Title>
-          <Overview>{nowPlayingData?.results[0].overview}</Overview>
+          <Overview>
+            {nowPlayingData?.results[0]?.overview &&
+            nowPlayingData.results[0].overview.length > 150
+              ? `${nowPlayingData.results[0].overview.substring(0, 150)}...`
+              : nowPlayingData?.results[0]?.overview}
+          </Overview>
           <InfoBtns>
             <InfoBtn src={PlayIcon} onClick={onPlayIconClick} />
             <InfoBtn src={ThumbUpIcon} />
@@ -97,21 +102,19 @@ const Banner = styled.div<{ bgImg: string }>`
   background-size: cover;
 `;
 const BannerText = styled.div`
-  width: 35vw;
+  width: 50%;
   flex-direction: column;
   position: relative;
-  top: 40%;
+  top: 50%;
   left: 3rem;
-  font-size: 18px;
 `;
 const Title = styled.h1`
-  margin-bottom: 1rem;
-  font-size: 6vw;
+  font-size: 4vw;
 `;
 const Overview = styled.p`
-  margin-bottom: 2rem;
+  margin: 0.5rem 0;
   letter-spacing: 1px;
-  line-height: 1.7;
+  line-height: 1.8;
 `;
 const BannerTrailerOverlay = styled.div`
   width: 100vw;

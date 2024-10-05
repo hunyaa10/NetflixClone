@@ -126,7 +126,7 @@ const SliderWrapper = styled.div`
 const SliderBox = styled.div`
   padding-left: 2rem;
   position: relative;
-  top: -100px;
+  top: -80px;
 `;
 const SliderTitle = styled.h4`
   padding: 0 0 1rem 1rem;

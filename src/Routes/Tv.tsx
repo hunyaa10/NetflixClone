@@ -98,7 +98,8 @@ const Banner = styled.div`
 
 const ArrowBtnBox = styled.div`
   width: 100%;
-  padding: 0 2rem;
+  margin-top: 50vh;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
