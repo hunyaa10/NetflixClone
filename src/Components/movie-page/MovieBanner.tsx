@@ -11,7 +11,6 @@ import {
 } from "../../api";
 
 // icon
-import PlusIcon from "../../icon/plus-circle.svg";
 import ThumbUpIcon from "../../icon/thumb-up.svg";
 import ThumbDownIcon from "../../icon/thumb-down.svg";
 import PlayIcon from "../../icon/play.svg";

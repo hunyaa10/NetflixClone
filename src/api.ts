@@ -83,3 +83,27 @@ export function getMoviesUpcoming() {
     `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&language=ko-KR`
   ).then((res) => res.json());
 }
+
+///////티비쇼///////////////
+export interface TvSeries {
+  id: number;
+  backdrop_path: string;
+  poster_path: string;
+  name: string;
+  overview: string;
+}
+export interface ITVShow {
+  id: number;
+  backdrop_path: string;
+  poster_path: string;
+  name: string;
+  overview: string;
+  results: TvSeries[];
+  length: number;
+}
+
+export function getTVshowsOnAir() {
+  return fetch(
+    `${BASE_PATH}/trending/tv/week?api_key=${API_KEY}&language=ko-KR`
+  ).then((res) => res.json());
+}
