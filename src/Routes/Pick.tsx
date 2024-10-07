@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import { useLikedMovies } from "../context/LikedMoviesContext";
 import { makeImagePath } from "../utilities";
-import { AnimatePresence, motion } from "framer-motion";
-import { useMatch, useNavigate } from "react-router-dom";
-import MovieDetailModal from "../Components/modal/MovieDetailModal";
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 function Pick() {
-  const navigate = useNavigate();
   const { likedMovies } = useLikedMovies();
-  const bigMovieMatch = useMatch("/movies/:movidId");
   const [selectedMovie, setSelectedMovie] = useState<number | null>(null);
 
   const onMovieClick = (movieId: number) => {
@@ -33,9 +29,6 @@ function Pick() {
             ))
           : "찜한 영화가 없습니다."}
       </Movies>
-      <AnimatePresence>
-        {/* {bigMovieMatch ? <MovieDetailModal /> : null} */}
-      </AnimatePresence>
     </Wrapper>
   );
 }

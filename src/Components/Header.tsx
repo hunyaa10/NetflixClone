@@ -63,7 +63,9 @@ const Header = () => {
   return (
     <Nav variants={headerVariants} animate={headerAnimation} initial={"top"}>
       <Col>
-        <Logo src={LogoIcon} alt="logo" />
+        <Link to="home">
+          <Logo src={LogoIcon} alt="logo" />
+        </Link>
         <MenuList>
           <Menu>
             <Link to="home">

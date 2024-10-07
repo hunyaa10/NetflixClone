@@ -77,7 +77,7 @@ const MovieBanner = () => {
           <BannerTrailerOverlay onClick={bannerOverlayClick}>
             <BannerTrailer>
               <BannerVideoFrame
-                src={`https://www.youtube.com/embed/${trailerKey}?controls=0&showinfo=0&rel=0`}
+                src={`https://www.youtube.com/embed/${trailerKey}`}
                 title="Trailer"
                 allowFullScreen
               />

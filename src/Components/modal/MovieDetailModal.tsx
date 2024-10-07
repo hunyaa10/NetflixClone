@@ -71,7 +71,7 @@ const MovieDetailModal = () => {
               <VideoTrailer>
                 <VideoFrame
                   key={movieVideos.results[0].id}
-                  src={`https://www.youtube.com/embed/${movieVideos.results[0].key}?controls=0&showinfo=0&rel=0`}
+                  src={`https://www.youtube.com/embed/${movieVideos.results[0].key}`}
                   title={movieVideos.results[0].name}
                   allowFullScreen
                 />

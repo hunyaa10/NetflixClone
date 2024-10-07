@@ -13,6 +13,7 @@ li {
 }
 button {
   display: block;
+  width: fit-content;
   cursor: pointer;
   background-color: transparent;
   border: none;
