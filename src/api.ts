@@ -1,7 +1,7 @@
 const API_KEY = "4b3ccb2f68da628589d0d587dbeb8fea";
 const BASE_PATH = "https://api.themoviedb.org/3";
 
-// 데이터타입 지정
+// Movies 데이터
 export interface IMovie {
   id: number;
   backdrop_path: string;
@@ -10,12 +10,10 @@ export interface IMovie {
   overview: string;
   genres: IGenre[];
 }
-
 export interface IGenre {
   id: number;
   name: string;
 }
-
 interface IVideo {
   id: string;
   key: string;
@@ -23,7 +21,6 @@ interface IVideo {
   site: string;
   type: string;
 }
-
 export interface IGetMoviesResult {
   dates: {
     maximum: string;
@@ -34,7 +31,6 @@ export interface IGetMoviesResult {
   total_pages: number;
   total_results: number;
 }
-
 export interface IGetMovieVideosResult {
   id: number;
   results: IVideo[];
@@ -84,7 +80,7 @@ export function getMoviesUpcoming() {
   ).then((res) => res.json());
 }
 
-// tvShow Data
+// tvShows 데이터
 export interface TvSeries {
   id: number;
   backdrop_path: string;
@@ -101,9 +97,21 @@ export interface ITVShow {
   results: TvSeries[];
   length: number;
 }
-
+export interface IGetTVShowVideosResult {
+  id: number;
+  results: IVideo[];
+}
+// 현재상영중인 티비쇼
 export function getTVshowsOnAir() {
   return fetch(
     `${BASE_PATH}/trending/tv/week?api_key=${API_KEY}&language=ko-KR`
   ).then((res) => res.json());
+}
+// 티비쇼 예고편
+export function getTVshowsVideos(
+  tvId: number
+): Promise<IGetTVShowVideosResult> {
+  return fetch(`${BASE_PATH}/tv/${tvId}/videos?api_key=${API_KEY}`).then(
+    (res) => res.json()
+  );
 }

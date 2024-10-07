@@ -2,12 +2,15 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getTVshowsOnAir, ITVShow } from "../api";
+import { getTVshowsOnAir, getTVshowsVideos, ITVShow } from "../api";
 import { makeImagePath } from "../utilities";
+import TVModal from "../Components/modal/TVModal";
 
 // icon
 import RightArrowIcon from "../icon/right-arrow.svg";
 import LeftArrowIcon from "../icon/left-arrow.svg";
+import PlayIcon from "../icon/play.svg";
+import { theme } from "../theme";
 
 // tv리스트 variants
 const fadeVariants = {
@@ -17,6 +20,8 @@ const fadeVariants = {
 
 const Tv: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isTVModal, setIsTVModal] = useState<boolean>(false);
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   // 티비시리즈 데이터
   const { data, isLoading } = useQuery<ITVShow>({
@@ -34,6 +39,15 @@ const Tv: React.FC = () => {
         return prev === totalLists - 1 ? 0 : prev + 1;
       }
     });
+  };
+
+  // 예고편모달창
+  const handleShowModal = async (tvId: number) => {
+    const videoData = await getTVshowsVideos(tvId);
+    if (videoData.results.length > 0) {
+      setVideoUrl(videoData.results[0].key);
+      setIsTVModal(true);
+    }
   };
 
   return (
@@ -65,7 +79,14 @@ const Tv: React.FC = () => {
                 animate={idx === currentIndex ? "enter" : "eixt"}
               >
                 <InfoText>
+                  {/* <p>{tv.id}</p> */}
                   <Title>{tv.name}</Title>
+                  <PlayBox>
+                    <PlayText>동영상 보러가기</PlayText>
+                    <PlayBtn onClick={() => handleShowModal(tv.id)}>
+                      <PlayBtnIcon src={PlayIcon} alt="play-icon" />
+                    </PlayBtn>
+                  </PlayBox>
                   <Overview>
                     {tv.overview.length > 150
                       ? `${tv.overview.substring(0, 150)}...`
@@ -75,6 +96,10 @@ const Tv: React.FC = () => {
               </List>
             ))}
           </ListBox>
+          {/* 모달창 */}
+          {isTVModal && (
+            <TVModal setIsTVModal={setIsTVModal} videoUrl={videoUrl} />
+          )}
         </Banner>
       )}
     </Wrapper>
@@ -139,9 +164,30 @@ const InfoText = styled.div`
 `;
 const Title = styled.h1`
   font-size: 4vw;
-  margin-bottom: 1rem;
+`;
+const PlayBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+`;
+const PlayBtn = styled.button`
+  position: relative;
+  z-index: 99;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const PlayBtnIcon = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+const PlayText = styled.h4`
+  color: ${(props) => theme.white.darker};
 `;
 const Overview = styled.p`
+  margin-top: 0.5rem;
   letter-spacing: 1px;
   line-height: 1.8;
 `;
