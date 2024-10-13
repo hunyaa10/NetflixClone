@@ -1,38 +1,38 @@
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { getMoviesSearch, IGetMoviesResult } from "../../api";
 import styled from "styled-components";
-import { useLikedMovies } from "../context/LikedMoviesContext";
-import { makeImagePath } from "../utilities";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { makeImagePath } from "../../utilities";
 
-function Pick() {
-  const { likedMovies } = useLikedMovies();
-  const [selectedMovie, setSelectedMovie] = useState<number | null>(null);
+interface SearchMoviesProps {
+  query: string;
+}
 
-  const onMovieClick = (movieId: number) => {
-    setSelectedMovie(movieId);
-    document.body.style.overflow = "hidden";
-  };
-
+const SearchMovies: React.FC<SearchMoviesProps> = ({ query }) => {
+  const { data, isLoading } = useQuery<IGetMoviesResult>({
+    queryKey: ["movies", "search", query],
+    queryFn: () => getMoviesSearch(query),
+  });
   return (
     <Wrapper>
-      <Title>내가 찜한 리스트</Title>
+      <Title>검색결과</Title>
       <Movies>
-        {likedMovies.length > 0
-          ? likedMovies.map((movie) => (
-              <Movie
-                key={movie.id}
-                bgImg={makeImagePath(movie.backdrop_path)}
-                onClick={() => onMovieClick(movie.id)}
-              >
-                <MovieTitle>{movie.title}</MovieTitle>
-              </Movie>
-            ))
-          : "찜한 영화가 없습니다."}
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          data?.results.map((movie) => (
+            <Movie key={movie.id} bgImg={makeImagePath(movie.backdrop_path)}>
+              <MovieTitle>{movie.title}</MovieTitle>
+            </Movie>
+          ))
+        )}
       </Movies>
     </Wrapper>
   );
-}
-export default Pick;
+};
+
+export default SearchMovies;
 
 // style
 const Wrapper = styled.div`
