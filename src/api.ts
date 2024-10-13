@@ -80,6 +80,13 @@ export function getMoviesUpcoming() {
   ).then((res) => res.json());
 }
 
+// 영화 Search 데이터
+export function getMoviesSearch(query: string): Promise<IGetMoviesResult> {
+  return fetch(
+    `${BASE_PATH}/search/movie?api_key=${API_KEY}&language=ko-KR&query=${query}`
+  ).then((res) => res.json());
+}
+
 // tvShows 데이터
 export interface TvSeries {
   id: number;
