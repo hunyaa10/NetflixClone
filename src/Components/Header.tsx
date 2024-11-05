@@ -7,7 +7,6 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import UserNav from "./UserNav";
 
-// 헤더 애니메이션
 const headerVariants = {
   top: {
     background: "linear-gradient(#000, transparent)",
@@ -17,7 +16,6 @@ const headerVariants = {
   },
 };
 
-// 검색창 애니메이션
 const searchInputVariants = {
   open: {
     scaleX: 1,
@@ -31,7 +29,6 @@ const searchInputVariants = {
 
 const Header = () => {
   const navigate = useNavigate();
-  // useRef로 input 지정
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [inputValue, setInputValue] = useState<string>("");
@@ -45,10 +42,9 @@ const Header = () => {
   const pickMatch = useMatch("pick");
   const headerAnimation = useAnimation();
 
-  // 영화검색함수
   const handleSearchMovie = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 검색입력값 지정
+
     const query = searchInputRef.current?.value;
     if (query) {
       navigate(`/search?query=${query}`);
