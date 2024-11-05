@@ -1,7 +1,7 @@
-const API_KEY = "4b3ccb2f68da628589d0d587dbeb8fea";
+const apiKey = process.env.REACT_APP_API_KEY;
 const BASE_PATH = "https://api.themoviedb.org/3";
 
-// Movies 데이터
+// 🚂movie
 export interface IMovie {
   id: number;
   backdrop_path: string;
@@ -36,58 +36,58 @@ export interface IGetMovieVideosResult {
   results: IVideo[];
 }
 
-// 현재상영작 데이터
+// 현재상영작
 export function getMovies() {
   return fetch(
-    `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/now_playing?api_key=${apiKey}&language=ko-KR`
   ).then((res) => res.json());
 }
 
-// 영화 상세정보 데이터
+// 영화상세정보
 export function getMovieDetails(movieId: number): Promise<IMovie> {
   return fetch(
-    `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/${movieId}?api_key=${apiKey}&language=ko-KR`
   ).then((res) => res.json());
 }
 
-// 영화예고편 데이터
+// 영화예고편
 export function getMovieVideos(
   movieId: number
 ): Promise<IGetMovieVideosResult> {
-  return fetch(`${BASE_PATH}/movie/${movieId}/videos?api_key=${API_KEY}`).then(
+  return fetch(`${BASE_PATH}/movie/${movieId}/videos?api_key=${apiKey}`).then(
     (res) => res.json()
   );
 }
 
-// 고평점 데이터
+// 고평점영화
 export function getMoviesTopRated() {
   return fetch(
-    `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/top_rated?api_key=${apiKey}&language=ko-KR`
   ).then((res) => res.json());
 }
 
-// 인기작 데이터
+// 인기작영화
 export function getMoviesPopular() {
   return fetch(
-    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/popular?api_key=${apiKey}&language=ko-KR`
   ).then((res) => res.json());
 }
 
-// 개봉예정작 데이터
+// 개봉예정작
 export function getMoviesUpcoming() {
   return fetch(
-    `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/upcoming?api_key=${apiKey}&language=ko-KR`
   ).then((res) => res.json());
 }
 
-// 영화 Search 데이터
+// 영화검색
 export function getMoviesSearch(query: string): Promise<IGetMoviesResult> {
   return fetch(
-    `${BASE_PATH}/search/movie?api_key=${API_KEY}&language=ko-KR&query=${query}`
+    `${BASE_PATH}/search/movie?api_key=${apiKey}&language=ko-KR&query=${query}`
   ).then((res) => res.json());
 }
 
-// tvShows 데이터
+// 🚂tvShow
 export interface TvSeries {
   id: number;
   backdrop_path: string;
@@ -108,17 +108,17 @@ export interface IGetTVShowVideosResult {
   id: number;
   results: IVideo[];
 }
-// 현재상영중인 티비쇼
+// 현재상영중
 export function getTVshowsOnAir() {
   return fetch(
-    `${BASE_PATH}/trending/tv/week?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/trending/tv/week?api_key=${apiKey}&language=ko-KR`
   ).then((res) => res.json());
 }
-// 티비쇼 예고편
+// 예고편
 export function getTVshowsVideos(
   tvId: number
 ): Promise<IGetTVShowVideosResult> {
-  return fetch(`${BASE_PATH}/tv/${tvId}/videos?api_key=${API_KEY}`).then(
-    (res) => res.json()
+  return fetch(`${BASE_PATH}/tv/${tvId}/videos?api_key=${apiKey}`).then((res) =>
+    res.json()
   );
 }
