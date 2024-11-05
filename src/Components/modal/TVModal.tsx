@@ -6,13 +6,8 @@ type TVModalProps = {
 };
 
 const TVModal = ({ setIsTVModal, videoUrl }: TVModalProps) => {
-  // 모달창 닫기
-  const handleCloseModal = () => {
-    setIsTVModal(false);
-  };
-
   return (
-    <Overlay onClick={handleCloseModal}>
+    <Overlay onClick={() => setIsTVModal(false)}>
       <Modal>
         {videoUrl && (
           <Iframe

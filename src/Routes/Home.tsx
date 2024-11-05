@@ -16,33 +16,41 @@ import MovieSlider from "../Components/movie-page/MovieSlider";
 function Home() {
   const bigMovieMatch = useMatch("/movies/:movidId");
 
-  // 현재 상영작 데이터
-  const { data: nowPlayingData, isLoading: isLoadingNowPlaying } =
-    useQuery<IGetMoviesResult>({
-      queryKey: ["movies", "nowPlaying"],
-      queryFn: getMovies,
-    });
+  const {
+    isLoading: isLoadingNowPlaying,
+    isError: isErrorNowPlaying,
+    error: errorNowPlaying,
+  } = useQuery<IGetMoviesResult>({
+    queryKey: ["movies", "nowPlaying"],
+    queryFn: getMovies,
+  });
 
-  // 고평점 영화 데이터
-  const { data: topRatedData, isLoading: isLoadingTopRated } =
-    useQuery<IGetMoviesResult>({
-      queryKey: ["movies", "topRated"],
-      queryFn: getMoviesTopRated,
-    });
+  const {
+    isLoading: isLoadingTopRated,
+    isError: isErrorTopRated,
+    error: errorTopRated,
+  } = useQuery<IGetMoviesResult>({
+    queryKey: ["movies", "topRated"],
+    queryFn: getMoviesTopRated,
+  });
 
-  // 인기작 데이터
-  const { data: popularData, isLoading: isLoadingPopular } =
-    useQuery<IGetMoviesResult>({
-      queryKey: ["movies", "popular"],
-      queryFn: getMoviesPopular,
-    });
+  const {
+    isLoading: isLoadingPopular,
+    isError: isErrorPopular,
+    error: errorPopular,
+  } = useQuery<IGetMoviesResult>({
+    queryKey: ["movies", "popular"],
+    queryFn: getMoviesPopular,
+  });
 
-  // 개봉 예정작 데이터
-  const { data: upcomingData, isLoading: isLoadingUpcoming } =
-    useQuery<IGetMoviesResult>({
-      queryKey: ["movies", "upcoming"],
-      queryFn: getMoviesUpcoming,
-    });
+  const {
+    isLoading: isLoadingUpcoming,
+    isError: isErrorUpcoming,
+    error: errorUpcoming,
+  } = useQuery<IGetMoviesResult>({
+    queryKey: ["movies", "upcoming"],
+    queryFn: getMoviesUpcoming,
+  });
 
   const isLoading =
     isLoadingNowPlaying ||
@@ -50,10 +58,22 @@ function Home() {
     isLoadingPopular ||
     isLoadingUpcoming;
 
+  const isError =
+    isErrorNowPlaying || isErrorTopRated || isErrorPopular || isErrorUpcoming;
+
+  const errorMessage =
+    errorNowPlaying?.message ||
+    errorTopRated?.message ||
+    errorPopular?.message ||
+    errorUpcoming?.message ||
+    "알 수 없는 오류가 발생했습니다.";
+
   return (
     <Wrapper>
       {isLoading ? (
         <Loader>Loading...</Loader>
+      ) : isError ? (
+        <ErrorMsg>{errorMessage}</ErrorMsg>
       ) : (
         <>
           <MovieBanner />
@@ -78,6 +98,7 @@ const Loader = styled.div`
   align-items: center;
   font-size: 20px;
 `;
+const ErrorMsg = styled(Loader)``;
 const Wrapper = styled.div`
   padding-bottom: 80px;
 `;

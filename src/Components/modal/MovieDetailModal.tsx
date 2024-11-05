@@ -10,7 +10,6 @@ import {
 import { motion } from "framer-motion";
 import { useLikedMovies } from "../../context/LikedMoviesContext";
 
-// icon
 import ThumbUpIcon from "../../icon/thumb-up.svg";
 import ThumbDownIcon from "../../icon/thumb-down.svg";
 import { useState } from "react";
@@ -19,30 +18,27 @@ const MovieDetailModal = () => {
   const navigate = useNavigate();
   const bigMovieMatch = useMatch("/movies/:movidId");
   const { addLikedMovie } = useLikedMovies();
+
   const [isFilled, setIsFilled] = useState(false);
 
   const handleClickHeart = () => {
     setIsFilled(!isFilled);
   };
-  // 찜 영화
+
   const handleAddLikedList = (movie: IMovie) => {
     handleClickHeart();
     addLikedMovie(movie);
-    // console.log(movie);
   };
 
-  // 이벤트버블링 방지
   const handleClickBlock = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
-  // 모달창 오버레이
   const onCloseModal = () => {
     navigate("/home");
     document.body.style.overflow = "";
   };
 
-  // 영화상세정보 데이터
   const movieId = bigMovieMatch?.params.movidId
     ? Number(bigMovieMatch.params.movidId)
     : undefined;
@@ -54,7 +50,6 @@ const MovieDetailModal = () => {
     enabled: movieId !== undefined,
   });
 
-  // 영화예고편 데이터
   const { data: movieVideos } = useQuery<IGetMovieVideosResult | undefined>({
     queryKey: ["movieVideos", movieId],
     queryFn: () =>
@@ -77,7 +72,6 @@ const MovieDetailModal = () => {
                 />
               </VideoTrailer>
             )}
-            {/* {console.log(movieDetails)} */}
             <InfoNav>
               <InfoTitle>{movieDetails.title}</InfoTitle>
               <InfoElements>
