@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { IGetMoviesResult } from "../../api";
 
-// icon
 import DoubleRight from "../../icon/double-right.svg";
 
 interface SliderProps {
@@ -16,10 +15,7 @@ interface SliderProps {
   };
 }
 
-// 한 화면에 보여줄 영화갯수
 const offset = 6;
-
-// row 슬라이드
 const rowVariants = {
   hidden: {
     x: window.outerWidth,
@@ -31,8 +27,6 @@ const rowVariants = {
     x: -window.outerWidth,
   },
 };
-
-// movie 호버시 사이즈
 const MovieVariants = {
   normal: {
     scale: 1,
@@ -43,8 +37,6 @@ const MovieVariants = {
     transition: { delay: 0.5, duration: 0.3, type: "tween" },
   },
 };
-
-// movie 호버 시 타이틀
 const infoVariants = {
   hover: {
     opacity: 1,

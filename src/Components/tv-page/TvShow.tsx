@@ -7,12 +7,10 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { theme } from "../../theme";
 
-// icon
 import RightArrowIcon from "../../icon/right-arrow.svg";
 import LeftArrowIcon from "../../icon/left-arrow.svg";
 import PlayIcon from "../../icon/play.svg";
 
-// tv리스트 variants
 const fadeVariants = {
   enter: { opacity: 1, transition: { duration: 0.5 } },
   exit: { opacity: 0, transition: { duration: 0.5 } },
@@ -23,13 +21,11 @@ const TvShow: React.FC = () => {
   const [isTVModal, setIsTVModal] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  // 티비시리즈 데이터
   const { data, isLoading } = useQuery<ITVShow>({
     queryKey: ["tvShows", "onAir"],
     queryFn: getTVshowsOnAir,
   });
 
-  // tv리스트 애니메이션
   const clickSlideMotion = (direction: "left" | "right") => {
     setCurrentIndex((prev) => {
       const totalLists = data?.results.length || 0;
@@ -41,7 +37,6 @@ const TvShow: React.FC = () => {
     });
   };
 
-  // 예고편모달창
   const handleShowModal = async (tvId: number) => {
     const videoData = await getTVshowsVideos(tvId);
     if (videoData.results.length > 0) {
@@ -49,13 +44,13 @@ const TvShow: React.FC = () => {
       setIsTVModal(true);
     }
   };
+
   return (
     <Wrapper>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <Banner>
-          {/* {console.log(data)} */}
           <ArrowBtnBox>
             <BtnIcon
               src={LeftArrowIcon}
@@ -78,7 +73,6 @@ const TvShow: React.FC = () => {
                 animate={idx === currentIndex ? "enter" : "eixt"}
               >
                 <InfoText>
-                  {/* <p>{tv.id}</p> */}
                   <Title>{tv.name}</Title>
                   <PlayBox>
                     <PlayText>동영상 보러가기</PlayText>

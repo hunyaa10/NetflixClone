@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-// img
-import LogoImg from "../../icon/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import LogoImg from "../../icon/logo.svg";
 
-// 로고 애니메이션
+interface InputValue {
+  email: string;
+  password: string;
+}
 const logoVariants = {
   initial: { rotateY: 360, opacity: 0 },
   animate: {
@@ -20,18 +22,13 @@ const logoVariants = {
   },
 };
 
-interface InputValue {
-  email: string;
-  password: string;
-}
-
 const LoginForm = () => {
   const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState<InputValue>({
     email: "",
     password: "",
   });
-
   const [isLogoVisible, setIsLogoVisible] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +46,6 @@ const LoginForm = () => {
     setIsLogoVisible(true);
   };
 
-  // 로그인 성공 시 로고 애니메이션 후 Home으로 이동
   useEffect(() => {
     if (isLogoVisible) {
       const logoShow = setTimeout(() => {
@@ -79,7 +75,7 @@ const LoginForm = () => {
           <Input
             type="email"
             name="email"
-            placeholder="이메일을 입력하세요"
+            placeholder="이메일을 아무거나 입력해주세요"
             required
             value={inputValue.email}
             onChange={handleInputChange}
@@ -87,7 +83,7 @@ const LoginForm = () => {
           <Input
             type="password"
             name="password"
-            placeholder="비밀번호를 입력하세요"
+            placeholder="비밀번호를 아무거나 입력해주세요"
             required
             value={inputValue.password}
             onChange={handleInputChange}
