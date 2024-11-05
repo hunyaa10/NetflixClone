@@ -4,7 +4,6 @@ import { theme } from "../theme";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-// icon
 import XIcon from "../icon/X-mark.svg";
 
 interface UserNavProps {
