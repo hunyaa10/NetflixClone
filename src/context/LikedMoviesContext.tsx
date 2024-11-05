@@ -31,10 +31,13 @@ export const LikedMoviesProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
+// 커스텀훅
 export const useLikedMovies = () => {
   const context = useContext(LikedMoviesContext);
   if (!context) {
-    throw new Error("useLikedMovies must be used within a LikedMoviesProvider");
+    throw new Error(
+      "useLikedMovie는 LikedMoviesProvider 내부에서만 사용가능합니다."
+    );
   }
   return context;
 };

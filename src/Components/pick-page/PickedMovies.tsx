@@ -6,23 +6,14 @@ import { makeImagePath } from "../../utilities";
 
 const PickedMovies = () => {
   const { likedMovies } = useLikedMovies();
-  const [selectedMovie, setSelectedMovie] = useState<number | null>(null);
 
-  const onMovieClick = (movieId: number) => {
-    setSelectedMovie(movieId);
-    document.body.style.overflow = "hidden";
-  };
   return (
     <Wrapper>
       <Title>내가 찜한 리스트</Title>
       <Movies>
         {likedMovies.length > 0
           ? likedMovies.map((movie) => (
-              <Movie
-                key={movie.id}
-                bgImg={makeImagePath(movie.backdrop_path)}
-                onClick={() => onMovieClick(movie.id)}
-              >
+              <Movie key={movie.id} bgImg={makeImagePath(movie.backdrop_path)}>
                 <MovieTitle>{movie.title}</MovieTitle>
               </Movie>
             ))
