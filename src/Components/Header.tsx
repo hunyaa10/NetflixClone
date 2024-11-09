@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import LogoIcon from "../icon/logo.svg";
-import SearchIcon from "../icon/search.svg";
-import UserIcon from "../icon/user.svg";
 import { motion, useAnimation, useScroll } from "framer-motion";
-import { Link, useMatch, useNavigate } from "react-router-dom";
-import React, { FormEvent, useEffect, useRef, useState } from "react";
-import UserNav from "./UserNav";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import HeaderMenu from "./header/HeaderMenu";
+import HeaderSearch from "./header/HeaderSearch";
+import HeaderUser from "./header/HeaderUser";
+
+import LogoIcon from "../icon/logo.svg";
 
 const headerVariants = {
   top: {
@@ -16,64 +17,24 @@ const headerVariants = {
   },
 };
 
-const searchInputVariants = {
-  open: {
-    scaleX: 1,
-    transition: { duration: 0.3, type: "linear" },
-  },
-  closed: {
-    scaleX: 0,
-    transition: { duration: 0.3, type: "linear" },
-  },
-};
-
 const Header = () => {
-  const navigate = useNavigate();
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
-  const [inputValue, setInputValue] = useState<string>("");
-  const [searchInputOpen, setSearchInputOpen] = useState(false);
-  const [isUserNavShow, setIsUserNavShow] = useState(false);
-
   const { scrollY } = useScroll();
-
-  const homeMatch = useMatch("home");
-  const tvMatch = useMatch("tv");
-  const pickMatch = useMatch("pick");
   const headerAnimation = useAnimation();
 
-  const handleSearchMovie = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const query = searchInputRef.current?.value;
-    if (query) {
-      navigate(`/search?query=${query}`);
-    }
-    setInputValue("");
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleShowUserNav = () => {
-    setIsUserNavShow(true);
-  };
-
-  const toggleSearch = () => {
-    setSearchInputOpen((prev) => !prev);
-  };
-
   useEffect(() => {
-    const scrollHeader = scrollY.onChange(() => {
-      if (scrollY.get() > 0) {
+    const handleScrollHeader = (latestY: number) => {
+      if (latestY > 0) {
         headerAnimation.start("scroll");
       } else {
         headerAnimation.start("top");
       }
-    });
+    };
 
-    return () => scrollHeader();
+    const unsubscribe = scrollY.on("change", handleScrollHeader);
+
+    return () => {
+      unsubscribe();
+    };
   }, [scrollY]);
 
   return (
@@ -82,46 +43,11 @@ const Header = () => {
         <Link to="home">
           <Logo src={LogoIcon} alt="logo" />
         </Link>
-        <MenuList>
-          <Menu>
-            <Link to="home">
-              영화 {homeMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Menu>
-          <Menu>
-            <Link to="tv">
-              TV 시리즈 {tvMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Menu>
-          <Menu>
-            <Link to="pick">
-              내가 찜한 리스트 {pickMatch && <Circle layoutId="circle" />}
-            </Link>
-          </Menu>
-        </MenuList>
+        <HeaderMenu />
       </Col>
       <Col>
-        <Search onSubmit={handleSearchMovie}>
-          <SearchInput
-            ref={searchInputRef}
-            name="searchInput"
-            placeholder="검색어를 입력하세요"
-            variants={searchInputVariants}
-            initial="closed"
-            animate={searchInputOpen ? "open" : "closed"}
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <SearchBtn type="submit">
-            <SearchImg
-              src={SearchIcon}
-              alt="search-icon"
-              onClick={toggleSearch}
-            />
-          </SearchBtn>
-        </Search>
-        <UserBtn src={UserIcon} onClick={handleShowUserNav} />
-        {isUserNavShow && <UserNav setIsUserNavShow={setIsUserNavShow} />}
+        <HeaderSearch />
+        <HeaderUser />
       </Col>
     </Nav>
   );
@@ -148,54 +74,4 @@ const Col = styled.div`
 const Logo = styled.img`
   margin-right: 2rem;
   width: 100px;
-`;
-const MenuList = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-const Menu = styled.li`
-  position: relative;
-  margin-right: 1.5rem;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  &:hover {
-    color: ${(props) => props.theme.red};
-  }
-`;
-const Circle = styled(motion.span)`
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 100%;
-  background-color: ${(props) => props.theme.red};
-`;
-const Search = styled.form`
-  margin-right: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  position: relative;
-`;
-const SearchInput = styled(motion.input)`
-  margin-right: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  transform-origin: right center;
-  border: 1px solid #6b6b6b;
-  border-radius: 0.25rem;
-  background-color: #222;
-  color: #fff;
-  /* display: none; */
-`;
-const SearchBtn = styled.button`
-  width: fit-content;
-`;
-const SearchImg = styled(motion.img)`
-  width: 24px;
-  height: 24px;
-`;
-const UserBtn = styled.img`
-  width: 1.5rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
 `;

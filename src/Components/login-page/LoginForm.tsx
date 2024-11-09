@@ -1,35 +1,20 @@
-import { motion } from "framer-motion";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import LogoImg from "../../icon/logo.svg";
-
 interface InputValue {
   email: string;
   password: string;
 }
-const logoVariants = {
-  initial: { rotateY: 360, opacity: 0 },
-  animate: {
-    rotateY: 0,
-    opacity: 1,
-    transition: { duration: 2, ease: "easeIn" },
-  },
-  exit: {
-    rotateY: 360,
-    opacity: 0,
-    transition: { ease: "easeOut" },
-  },
-};
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+interface LoginFormProps {
+  handleLogin: () => void;
+}
 
+const LoginForm = ({ handleLogin }: LoginFormProps) => {
   const [inputValue, setInputValue] = useState<InputValue>({
     email: "",
     password: "",
   });
-  const [isLogoVisible, setIsLogoVisible] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,74 +26,34 @@ const LoginForm = () => {
     handleLogin();
   };
 
-  const handleLogin = () => {
-    localStorage.setItem("isLogin", "1");
-    setIsLogoVisible(true);
-  };
-
-  useEffect(() => {
-    if (isLogoVisible) {
-      const logoShow = setTimeout(() => {
-        setIsLogoVisible(false);
-        navigate("/home");
-      }, 2000);
-      // cleanup
-      return () => clearTimeout(logoShow);
-    }
-  }, [isLogoVisible, navigate]);
   return (
-    <Warrper>
-      {isLogoVisible ? (
-        <LogoWrapper>
-          <LogoBox
-            variants={logoVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <Logo src={LogoImg} alt="logo" />
-          </LogoBox>
-        </LogoWrapper>
-      ) : (
-        <Form onSubmit={handleLoginSubmit}>
-          <LogoTitle src={LogoImg} alt="logo" />
-          <Input
-            type="email"
-            name="email"
-            placeholder="이메일을 아무거나 입력해주세요"
-            required
-            value={inputValue.email}
-            onChange={handleInputChange}
-          />
-          <Input
-            type="password"
-            name="password"
-            placeholder="비밀번호를 아무거나 입력해주세요"
-            required
-            value={inputValue.password}
-            onChange={handleInputChange}
-          />
-          <LoginBtn type="submit">로그인</LoginBtn>
-          <Text>아직 넷플릭스 회원이 아니신가요?</Text>
-        </Form>
-      )}
-    </Warrper>
+    <Form onSubmit={handleLoginSubmit}>
+      <LogoTitle src={LogoImg} alt="logo" />
+      <Input
+        type="email"
+        name="email"
+        placeholder="이메일을 아무거나 입력해주세요"
+        required
+        value={inputValue.email}
+        onChange={handleInputChange}
+      />
+      <Input
+        type="password"
+        name="password"
+        placeholder="비밀번호를 아무거나 입력해주세요"
+        required
+        value={inputValue.password}
+        onChange={handleInputChange}
+      />
+      <LoginBtn type="submit">로그인</LoginBtn>
+      <Text>아직 넷플릭스 회원이 아니신가요?</Text>
+    </Form>
   );
 };
 
 export default LoginForm;
 
-//style
-const Warrper = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #000;
-  position: relative;
-  z-index: 9998;
-`;
+// style
 const Form = styled.form`
   width: 30%;
   padding: 2rem;
@@ -149,20 +94,4 @@ const LoginBtn = styled.button`
 const Text = styled.p`
   margin-top: 1rem;
   color: #333;
-`;
-
-// 로고 애니매이션css
-const LogoWrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  z-index: 9999;
-  background-color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const LogoBox = styled(motion.h1)``;
-const Logo = styled.img`
-  width: 15vw;
 `;
