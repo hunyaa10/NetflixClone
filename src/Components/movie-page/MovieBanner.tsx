@@ -9,10 +9,7 @@ import {
   IGetMoviesResult,
   IGetMovieVideosResult,
 } from "../../api";
-
-import ThumbUpIcon from "../../icon/thumb-up.svg";
-import ThumbDownIcon from "../../icon/thumb-down.svg";
-import PlayIcon from "../../icon/play.svg";
+import MovieBnText from "./MovieBnText";
 
 const MovieBanner = () => {
   const [showTrailer, setShowTrailer] = useState<boolean>(false);
@@ -48,24 +45,13 @@ const MovieBanner = () => {
   return (
     <>
       <Banner
-        bgImg={makeImagePath(nowPlayingData?.results[0].backdrop_path || "")}
+        $bgimg={makeImagePath(nowPlayingData?.results[0].backdrop_path || "")}
       >
-        <BannerText>
-          <Title>{nowPlayingData?.results[0].title}</Title>
-          <Overview>
-            {nowPlayingData?.results[0]?.overview &&
-            nowPlayingData.results[0].overview.length > 150
-              ? `${nowPlayingData.results[0].overview.substring(0, 150)}...`
-              : nowPlayingData?.results[0]?.overview}
-          </Overview>
-          <InfoBtns>
-            <InfoBtn src={PlayIcon} onClick={onPlayIconClick} />
-            <InfoBtn src={ThumbUpIcon} />
-            <InfoBtn src={ThumbDownIcon} />
-          </InfoBtns>
-        </BannerText>
+        <MovieBnText
+          nowPlayingData={nowPlayingData}
+          onPlayIconClick={onPlayIconClick}
+        />
       </Banner>
-
       {/* 베너 예고편 모달창*/}
       <AnimatePresence>
         {showTrailer && trailerKey && (
@@ -87,28 +73,13 @@ const MovieBanner = () => {
 export default MovieBanner;
 
 //style
-const Banner = styled.div<{ bgImg: string }>`
+const Banner = styled.div<{ $bgimg: string }>`
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)),
-    url(${(props) => props.bgImg});
+    url(${(props) => props.$bgimg});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-`;
-const BannerText = styled.div`
-  width: 50%;
-  flex-direction: column;
-  position: relative;
-  top: 50%;
-  left: 3rem;
-`;
-const Title = styled.h1`
-  font-size: 4vw;
-`;
-const Overview = styled.p`
-  margin: 0.5rem 0;
-  letter-spacing: 1px;
-  line-height: 1.8;
 `;
 const BannerTrailerOverlay = styled.div`
   width: 100vw;
@@ -138,16 +109,4 @@ const BannerVideoFrame = styled.iframe`
   height: auto;
   aspect-ratio: 16 / 9;
   border: none;
-`;
-const InfoBtns = styled.div`
-  display: flex;
-`;
-const InfoBtn = styled.img`
-  width: 32px;
-  margin-right: 1rem;
-  cursor: pointer;
-  opacity: 0.7;
-  &:hover {
-    opacity: 1;
-  }
 `;

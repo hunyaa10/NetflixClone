@@ -1,27 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getTVshowsOnAir, getTVshowsVideos, ITVShow } from "../../api";
-import { makeImagePath } from "../../utilities";
 import TVModal from "../modal/TVModal";
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { theme } from "../../theme";
-
-import RightArrowIcon from "../../icon/right-arrow.svg";
-import LeftArrowIcon from "../../icon/left-arrow.svg";
-import PlayIcon from "../../icon/play.svg";
-
-const fadeVariants = {
-  enter: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0, transition: { duration: 0.5 } },
-};
+import ArrowBtn from "./ArrowBtn";
+import TvLists from "./TvLists";
 
 const TvShow: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isTVModal, setIsTVModal] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const { data, isLoading } = useQuery<ITVShow>({
+  const { data, isLoading } = useQuery<ITVShow | undefined>({
     queryKey: ["tvShows", "onAir"],
     queryFn: getTVshowsOnAir,
   });
@@ -51,44 +41,12 @@ const TvShow: React.FC = () => {
         <Loader>Loading...</Loader>
       ) : (
         <Banner>
-          <ArrowBtnBox>
-            <BtnIcon
-              src={LeftArrowIcon}
-              alt="left-arrow"
-              onClick={() => clickSlideMotion("left")}
-            />
-            <BtnIcon
-              src={RightArrowIcon}
-              alt="right-arrow"
-              onClick={() => clickSlideMotion("right")}
-            />
-          </ArrowBtnBox>
-          <ListBox>
-            {data?.results.map((tv, idx) => (
-              <List
-                key={tv.id}
-                bgImg={makeImagePath(tv.backdrop_path)}
-                variants={fadeVariants}
-                initial="exit"
-                animate={idx === currentIndex ? "enter" : "eixt"}
-              >
-                <InfoText>
-                  <Title>{tv.name}</Title>
-                  <PlayBox>
-                    <PlayText>동영상 보러가기</PlayText>
-                    <PlayBtn onClick={() => handleShowModal(tv.id)}>
-                      <PlayBtnIcon src={PlayIcon} alt="play-icon" />
-                    </PlayBtn>
-                  </PlayBox>
-                  <Overview>
-                    {tv.overview.length > 150
-                      ? `${tv.overview.substring(0, 150)}...`
-                      : tv.overview}
-                  </Overview>
-                </InfoText>
-              </List>
-            ))}
-          </ListBox>
+          <ArrowBtn clickSlideMotion={clickSlideMotion} />
+          <TvLists
+            data={data}
+            currentIndex={currentIndex}
+            handleShowModal={handleShowModal}
+          />
           {/* 모달창 */}
           {isTVModal && (
             <TVModal setIsTVModal={setIsTVModal} videoUrl={videoUrl} />
@@ -113,75 +71,4 @@ const Wrapper = styled.div``;
 
 const Banner = styled.div`
   position: relative;
-`;
-
-const ArrowBtnBox = styled.div`
-  width: 100%;
-  margin-top: 50vh;
-  padding: 0 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  z-index: 999;
-`;
-const BtnIcon = styled.img`
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 0.25rem;
-  }
-`;
-
-const ListBox = styled.div`
-  position: relative;
-`;
-const List = styled(motion.div)<{ bgImg: string }>`
-  width: 100vw;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)),
-    url(${(props) => props.bgImg});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const InfoText = styled.div`
-  width: 50%;
-  position: absolute;
-  bottom: 4rem;
-  left: 3rem;
-`;
-const Title = styled.h1`
-  font-size: 4vw;
-`;
-const PlayBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1rem;
-`;
-const PlayBtn = styled.button`
-  position: relative;
-  z-index: 99;
-  opacity: 0.7;
-  &:hover {
-    opacity: 1;
-  }
-`;
-const PlayBtnIcon = styled.img`
-  width: 40px;
-  height: 40px;
-`;
-const PlayText = styled.h4`
-  color: ${(props) => theme.white.darker};
-`;
-const Overview = styled.p`
-  margin-top: 0.5rem;
-  letter-spacing: 1px;
-  line-height: 1.8;
 `;
