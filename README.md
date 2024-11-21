@@ -1,6 +1,14 @@
-# Netflex 클론코딩
+![스크린샷 2024-11-21 224735](https://github.com/user-attachments/assets/e5cc3326-dae0-44b4-a204-70caa675e1c9)
+<div align="center">
+  <h1>
+    <img src='https://github.com/user-attachments/assets/8a21c23e-c46c-4dd1-9be0-f6cb7b2b651a' display='inline' width='24px'/>
+    NetflexClone_넷플릭스클론
+  </h1>
+  <br />
+</div>
 
 TMDB에서 제공하는 오픈 API와 TypeScript를 활용하여 다양한 컨텐츠 목록을 보여주고, 넷플릭스 사이트에 있는 기능과 애니메이션 효과를 구현한 사이트를 만들었습니다.
+<hr/>
 
 ## 🌟프로젝트 개요
 
@@ -38,3 +46,11 @@ TMDB에서 제공하는 오픈 API와 TypeScript를 활용하여 다양한 컨�
 - 티비컨텐츠 페이드인/아웃 슬라이더
 - 컨텐츠 호버 시 스케일 효과
 - 검색창 좌측슬라이드 효과
+
+## 📃페이지 미리보기
+<div>
+  <img src='https://github.com/user-attachments/assets/88be5c72-889b-4244-a4c7-7d4d289e0c46' width='400px' display='inline'/>
+  <img src='https://github.com/user-attachments/assets/c4f375e0-0b4c-4c65-8481-93461d89e005' width='400px' display='inline'/>
+  <img src='https://github.com/user-attachments/assets/7d8b1887-baba-4213-b402-9bd0bb054d48' width='400px' display='inline'/>
+  <img src='https://github.com/user-attachments/assets/79e346c5-db06-46f2-b25d-35df1c28d4b7' width='400px' display='inline'/>
+</div>
