@@ -10,12 +10,17 @@ import {
   IGetMovieVideosResult,
 } from "../../api";
 import MovieBnText from "./MovieBnText";
+import { theme } from "../../theme";
 
 const MovieBanner = () => {
   const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
 
-  const { data: nowPlayingData } = useQuery<IGetMoviesResult>({
+  const {
+    data: nowPlayingData,
+    isLoading,
+    isError,
+  } = useQuery<IGetMoviesResult>({
     queryKey: ["movies", "nowPlaying"],
     queryFn: getMovies,
   });
@@ -38,9 +43,11 @@ const MovieBanner = () => {
     }
   };
 
-  const bannerOverlayClick = () => {
-    setShowTrailer(false);
-  };
+  if (isLoading) {
+    return <Loader>영화배너 로딩중...</Loader>;
+  } else if (isError) {
+    return <Error>영화배너를 로딩하는중 오류가 발생했습니다</Error>;
+  }
 
   return (
     <>
@@ -55,7 +62,7 @@ const MovieBanner = () => {
       {/* 베너 예고편 모달창*/}
       <AnimatePresence>
         {showTrailer && trailerKey && (
-          <BannerTrailerOverlay onClick={bannerOverlayClick}>
+          <BannerTrailerOverlay onClick={() => setShowTrailer(false)}>
             <BannerTrailer>
               <BannerVideoFrame
                 src={`https://www.youtube.com/embed/${trailerKey}`}
@@ -73,6 +80,18 @@ const MovieBanner = () => {
 export default MovieBanner;
 
 //style
+const Loader = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: ${theme.white.darker};
+`;
+const Error = styled(Loader)`
+  color: ${theme.red};
+`;
 const Banner = styled.div<{ $bgimg: string }>`
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)),
@@ -101,8 +120,8 @@ const BannerTrailer = styled.div`
   justify-content: center;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid #ffffff64;
-  box-shadow: 0 0 50px 0 #ffffff64;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 50px 0 rgba(255, 255, 255, 0.5);
 `;
 const BannerVideoFrame = styled.iframe`
   width: 100%;

@@ -6,10 +6,11 @@ import { motion } from "framer-motion";
 import MovieModalOverview from "./MovieModalOverview";
 import MovieModalTrailer from "./MovieModalTrailer";
 import MovieModalInfo from "./MovieModalInfo";
+import { theme } from "../../theme";
 
 const MovieDetailModal = () => {
   const navigate = useNavigate();
-  const bigMovieMatch = useMatch("/movies/:movidId");
+  const bigMovieMatch = useMatch("/movies/:movieId");
 
   const handleClickBlock = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -20,8 +21,8 @@ const MovieDetailModal = () => {
     document.body.style.overflow = "";
   };
 
-  const movieId = bigMovieMatch?.params.movidId
-    ? Number(bigMovieMatch.params.movidId)
+  const movieId = bigMovieMatch?.params.movieId
+    ? Number(bigMovieMatch.params.movieId)
     : undefined;
 
   const { data: movieDetails } = useQuery<IMovie | undefined>({
@@ -66,7 +67,7 @@ const InfoBox = styled(motion.div)`
   height: 80vh;
   background-color: #000;
   border: 1px solid #e5101350;
-  box-shadow: 0 0 30px -10px ${(props) => props.theme.red};
+  box-shadow: 0 0 30px -10px ${theme.red};
   border-radius: 1rem;
   overflow-y: scroll;
 `;

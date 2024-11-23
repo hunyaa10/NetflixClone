@@ -1,7 +1,7 @@
 const apiKey = process.env.REACT_APP_API_KEY;
 const BASE_PATH = "https://api.themoviedb.org/3";
 
-// 🚂movie
+// 📺movie
 export interface IMovie {
   id: number;
   backdrop_path: string;
@@ -10,7 +10,7 @@ export interface IMovie {
   overview: string;
   genres: IGenre[];
 }
-export interface IGenre {
+interface IGenre {
   id: number;
   name: string;
 }
@@ -87,7 +87,7 @@ export function getMoviesSearch(query: string): Promise<IGetMoviesResult> {
   ).then((res) => res.json());
 }
 
-// 🚂tvShow
+// 📺tvShow
 export interface TvSeries {
   id: number;
   backdrop_path: string;
