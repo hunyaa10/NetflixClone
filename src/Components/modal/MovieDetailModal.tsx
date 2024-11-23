@@ -66,8 +66,8 @@ const InfoBox = styled(motion.div)`
   width: 40vw;
   height: 80vh;
   background-color: #000;
-  border: 1px solid #e5101350;
-  box-shadow: 0 0 30px -10px ${theme.red};
+  border: 1px solid ${theme.red.opaciter};
+  box-shadow: 0 0 30px -10px ${theme.red.original};
   border-radius: 1rem;
   overflow-y: scroll;
 `;

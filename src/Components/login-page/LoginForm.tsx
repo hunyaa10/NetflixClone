@@ -91,7 +91,7 @@ const Input = styled.input`
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
-  background-color: ${theme.white.darker};
+  background-color: ${theme.white.lighter};
   &:focus {
     outline: none;
     border: 1px solid "#328bc7";
@@ -101,7 +101,7 @@ const LoginBtn = styled.button`
   margin-top: 3rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background-color: ${theme.red};
+  background-color: ${theme.red.original};
   color: ${theme.white.lighter};
   letter-spacing: 1px;
   font-weight: 600;

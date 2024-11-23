@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../../theme";
 
 type TVModalProps = {
   setIsTVModal: (value: boolean) => void;
@@ -44,8 +45,8 @@ const Modal = styled.div`
   justify-content: center;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid #ffffff64;
-  box-shadow: 0 0 50px 0 #ffffff64;
+  border: 1px solid ${theme.white.opaciter};
+  box-shadow: 0 0 50px 0 ${theme.white.opaciter};
 `;
 const Iframe = styled.iframe`
   width: 100%;

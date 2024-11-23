@@ -49,7 +49,7 @@ const Loader = styled.div`
   color: ${theme.white.darker};
 `;
 const Error = styled(Loader)`
-  color: ${theme.red};
+  color: ${theme.red.original};
 `;
 const Wrapper = styled.div`
   padding: 5rem 3rem;

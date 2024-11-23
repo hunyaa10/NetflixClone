@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
+import { theme } from "../../theme";
 
 const HeaderMenu = () => {
   const homeMatch = useMatch("home");
@@ -38,7 +39,7 @@ const Menu = styled.li`
   font-weight: 500;
   cursor: pointer;
   &:hover {
-    color: ${(props) => props.theme.red};
+    color: ${theme.red.original};
   }
 `;
 const Circle = styled(motion.span)`
@@ -46,5 +47,5 @@ const Circle = styled(motion.span)`
   width: 4px;
   height: 4px;
   border-radius: 100%;
-  background-color: ${(props) => props.theme.red};
+  background-color: ${theme.red.original};
 `;

@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useLikedMovies } from "../../context/LikedMoviesContext";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { makeImagePath } from "../../utilities";
+import { theme } from "../../theme";
 
 const PickedMovies = () => {
   const { likedMovies } = useLikedMovies();
@@ -56,7 +56,7 @@ const Movie = styled.div<{ bgImg: string }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 0 0 10px 0 #ffffff92;
+  box-shadow: 0 0 10px 0 ${theme.white.opaciter};
   cursor: pointer;
   overflow: hidden;
   position: relative;

@@ -90,7 +90,7 @@ const Loader = styled.div`
   color: ${theme.white.darker};
 `;
 const Error = styled(Loader)`
-  color: ${theme.red};
+  color: ${theme.red.original};
 `;
 const Banner = styled.div<{ $bgimg: string }>`
   height: 100vh;
@@ -120,8 +120,8 @@ const BannerTrailer = styled.div`
   justify-content: center;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 50px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid ${theme.white.opaciter};
+  box-shadow: 0 0 50px 0 ${theme.white.opaciter};
 `;
 const BannerVideoFrame = styled.iframe`
   width: 100%;

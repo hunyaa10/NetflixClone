@@ -64,7 +64,7 @@ const Nav = styled(motion.nav)`
   align-items: center;
   position: fixed;
   top: 0;
-  color: white;
+  color: #fff;
   z-index: 997;
 `;
 const Col = styled.div`
