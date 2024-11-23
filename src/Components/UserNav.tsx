@@ -108,6 +108,6 @@ const LogoutBtn = styled.button`
   color: #333;
   border-top: 1px solid ${theme.white.darker};
   &:hover {
-    color: ${theme.red};
+    color: ${theme.red.original};
   }
 `;

@@ -7,25 +7,29 @@ interface MovieModalTrailerProps {
 }
 
 const MovieModalTrailer = ({ movieId }: MovieModalTrailerProps) => {
-  const { data: movieVideos } = useQuery<IGetMovieVideosResult | undefined>({
+  const { data: movieVideos, isLoading } = useQuery<
+    IGetMovieVideosResult | undefined
+  >({
     queryKey: ["movieVideos", movieId],
     queryFn: () =>
       movieId ? getMovieVideos(movieId) : Promise.resolve(undefined),
     enabled: movieId !== undefined,
   });
+
   return (
-    <>
-      {movieVideos && movieVideos.results.length > 0 && (
-        <VideoTrailer>
-          <VideoFrame
-            key={movieVideos.results[0].id}
-            src={`https://www.youtube.com/embed/${movieVideos.results[0].key}`}
-            title={movieVideos.results[0].name}
-            allowFullScreen
-          />
-        </VideoTrailer>
-      )}
-    </>
+    <VideoTrailer>
+      {isLoading
+        ? "유투브 연결중..."
+        : movieVideos &&
+          movieVideos.results.length > 0 && (
+            <VideoFrame
+              key={movieVideos.results[0].id}
+              src={`https://www.youtube.com/embed/${movieVideos.results[0].key}`}
+              title={movieVideos.results[0].name}
+              allowFullScreen
+            />
+          )}
+    </VideoTrailer>
   );
 };
 

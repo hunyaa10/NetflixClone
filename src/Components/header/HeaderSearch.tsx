@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import SearchIcon from "../../icon/search.svg";
+import { theme } from "../../theme";
 
 const searchInputVariants = {
   open: {
@@ -74,7 +75,7 @@ const SearchInput = styled(motion.input)`
   margin-right: 0.5rem;
   padding: 0.25rem 0.5rem;
   transform-origin: right center;
-  border: 1px solid #6b6b6b;
+  border: 1px solid ${theme.white.darker};
   border-radius: 0.25rem;
   background-color: #222;
   color: #fff;

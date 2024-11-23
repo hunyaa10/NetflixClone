@@ -76,7 +76,7 @@ const Loader = styled.div`
   color: ${theme.white.darker};
 `;
 const Error = styled(Loader)`
-  color: ${theme.red};
+  color: ${theme.red.original};
 `;
 const SliderWrapper = styled.div`
   margin-bottom: 180px;
@@ -88,7 +88,7 @@ const SliderBox = styled.div`
 `;
 const SliderTitle = styled.h4`
   padding: 0 0 1rem 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: ${theme.white.darker};
   font-size: 20px;
 `;
 
