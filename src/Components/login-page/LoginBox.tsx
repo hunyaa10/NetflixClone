@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm";
 const LoginBox = () => {
   const navigate = useNavigate();
 
-  const [isLogoVisible, setIsLogoVisible] = useState(false);
+  const [isLogoVisible, setIsLogoVisible] = useState<boolean>(false);
 
   const handleLogin = () => {
     localStorage.setItem("isLogin", "1");

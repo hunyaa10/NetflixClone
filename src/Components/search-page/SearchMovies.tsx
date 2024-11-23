@@ -4,29 +4,33 @@ import { getMoviesSearch, IGetMoviesResult } from "../../api";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { makeImagePath } from "../../utilities";
+import { theme } from "../../theme";
 
 interface SearchMoviesProps {
   query: string;
 }
 
 const SearchMovies: React.FC<SearchMoviesProps> = ({ query }) => {
-  const { data, isLoading } = useQuery<IGetMoviesResult>({
+  const { data, isLoading, isError } = useQuery<IGetMoviesResult>({
     queryKey: ["movies", "search", query],
     queryFn: () => getMoviesSearch(query),
   });
+
+  if (isLoading) {
+    return <Loader>영화검색목록 로딩중...</Loader>;
+  } else if (isError) {
+    return <Error>영화검색목록을 로딩하는중 오류가 발생했습니다</Error>;
+  }
+
   return (
     <Wrapper>
       <Title>검색결과</Title>
       <Movies>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          data?.results.map((movie) => (
-            <Movie key={movie.id} bgImg={makeImagePath(movie.backdrop_path)}>
-              <MovieTitle>{movie.title}</MovieTitle>
-            </Movie>
-          ))
-        )}
+        {data?.results.map((movie) => (
+          <Movie key={movie.id} bgImg={makeImagePath(movie.backdrop_path)}>
+            <MovieTitle>{movie.title}</MovieTitle>
+          </Movie>
+        ))}
       </Movies>
     </Wrapper>
   );
@@ -35,6 +39,18 @@ const SearchMovies: React.FC<SearchMoviesProps> = ({ query }) => {
 export default SearchMovies;
 
 // style
+const Loader = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: ${theme.white.darker};
+`;
+const Error = styled(Loader)`
+  color: ${theme.red};
+`;
 const Wrapper = styled.div`
   padding: 5rem 3rem;
 `;
@@ -65,7 +81,7 @@ const Movie = styled.div<{ bgImg: string }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 0 0 10px 0 #ffffff92;
+  box-shadow: 0 0 10px 0 ${theme.white.darker};
   cursor: pointer;
   overflow: hidden;
   position: relative;
